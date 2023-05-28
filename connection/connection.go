@@ -1,14 +1,19 @@
 package connection
 
 import (
-	"database/sql"
 	"fmt"
-	_ "github.com/denisenkom/go-mssqldb"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
+	//_ "github.com/denisenkom/go-mssqldb"
 )
 
-func GetConnection(server, user, password, database, port string) (*sql.DB, error) {
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%s;database=%s",
-		server, user, password, port, database)
-	return sql.Open("sqlserver", connString)
+func GetConnection(host, user, password, dbname, port string) (*gorm.DB, error) {
+	const dsn = "host=%s user=%s password=%s dbname=%s port=%s sslmode=disable"
+	return gorm.Open(postgres.Open(fmt.Sprintf(dsn, host, user, password, dbname, port)),
+		&gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				SingularTable: true},
+		})
 }
-
