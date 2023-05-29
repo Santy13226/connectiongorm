@@ -1,7 +1,6 @@
 package models
 
 type Cliente struct {
-	Id                 int    `gorm:"column:id_cliente"`
 	Cedula             string `gorm:"column:cedula"`
 	Nombres            string `gorm:"column:nombres"`
 	Apellidos          string `gorm:"column:apellidos"`
