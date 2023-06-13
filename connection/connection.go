@@ -28,7 +28,7 @@ func CloseConnection() error {
 			return err
 		}
 		err = sqlDB.Close()
-		if err != nil {
+		if err != nil { 
 			return err
 		}
 	}

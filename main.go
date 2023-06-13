@@ -36,7 +36,21 @@ func leerInput(mensaje string) string {
 }
 
 func main() {
-	conn, err := connection.GetConnection("localhost", "postgres", "200018S@nty", "chatbot", "5432")
+
+	server := "localhost"
+	database := "chatbot"
+
+	//Obtener la Conexion con POSTGRES
+	conn, err := connection.GetConnection(server, "postgres", "200018S@nty", database, "5432")
+
+	// Obtener la Conexión con SQL SERVER
+	//conn, err := connection.GetConnectionSQLS(server, database)
+
+	//------------------------------------------------------------------------------
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	errorFatal(err)
 
 	// Crear instancia del repositorio de clientes
@@ -98,11 +112,13 @@ func main() {
 					cliente.Edad = edad
 
 					err = clienteRepo.RegistrarCliente(cliente)
+
 					errorFatal(err)
 
 				case "2":
 					// Consultar clientes
 					clientes, err := clienteRepo.ConsultarClientes()
+
 					errorFatal(err)
 					for _, c := range clientes {
 						fmt.Println(c)
@@ -239,25 +255,25 @@ func main() {
 				fmt.Println("3. Actualizar pedido")
 				fmt.Println("4. Eliminar pedido")
 				fmt.Println("0. Volver")
-		
+
 				pedidoOpcion := leerInput("Ingrese el número de opción: ")
-		
+
 				if pedidoOpcion == "0" {
 					break
 				}
-		
+
 				switch pedidoOpcion {
 				case "1":
 					// Insertar pedido
 					pedido := &models.Pedido{
-						IDCliente:  2,
+						IDCliente:  10,
 						IDSucursal: 1,
 						Fecha:      time.Now(),
 						Producto:   leerInput("Ingrese el nombre del producto: "),
 						Cantidad:   0,
 						Precio:     0,
 					}
-		
+
 					// Leer la cantidad como entero
 					cantidadStr := leerInput("Ingrese la cantidad: ")
 					cantidad, err := strconv.Atoi(cantidadStr)
@@ -265,7 +281,7 @@ func main() {
 						log.Fatal(err.Error())
 					}
 					pedido.Cantidad = cantidad
-		
+
 					// Leer el precio como número de punto flotante
 					precioStr := leerInput("Ingrese el precio: ")
 					precio, err := strconv.ParseFloat(precioStr, 64)
@@ -273,10 +289,10 @@ func main() {
 						log.Fatal(err.Error())
 					}
 					pedido.Precio = precio
-		
+
 					err = pedidoRepo.RegistrarPedido(pedido)
 					errorFatal(err)
-		
+
 				case "2":
 					// Consultar pedidos
 					pedidos, err := pedidoRepo.ConsultarPedido()
@@ -286,7 +302,7 @@ func main() {
 					for _, p := range pedidos {
 						fmt.Println(p)
 					}
-				
+
 				case "3":
 					// Actualizar pedido
 					IDStr := leerInput("Ingrese el ID del pedido a actualizar: ")
@@ -307,8 +323,7 @@ func main() {
 
 					err = pedidoRepo.ActualizarPedido(ID, pedidoActualizado)
 					errorFatal(err)
-				
-		
+
 				case "4":
 					// Eliminar pedido
 					IDStr := leerInput("Ingrese el ID del pedido a eliminar: ")
@@ -316,16 +331,16 @@ func main() {
 					if err != nil {
 						log.Fatal(err.Error())
 					}
-		
+
 					err = pedidoRepo.EliminarPedido(ID)
 					errorFatal(err)
-		
+
 				default:
 					fmt.Println("Opción inválida")
 				}
-		
+
 			}
-		
+
 		case "0":
 			fmt.Println("Saliendo del programa...")
 			return
