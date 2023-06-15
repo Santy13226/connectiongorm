@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
+
+	//"regexp"
 	"strconv"
 	"strings"
 
-	"github.com/Santy13226/connectiongorm.git/connection"
-	//"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/connection"
-
-	"github.com/Santy13226/connectiongorm.git/models"
-	"github.com/Santy13226/connectiongorm.git/database/repositories"
+	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/connection"
 	"golang.org/x/crypto/bcrypt"
+
+	//"github.com/Santy13226/connectiongorm.git/CAPA_LOGICA"
+	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/database/repositories"
+	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/models"
+	//"golang.org/x/crypto/bcrypt"
 )
 
 func errorFatal(err error) {
@@ -30,66 +32,66 @@ func leerInput(mensaje, tipo string) string {
 	input, err := resp.ReadString('\n')
 	// Eliminar el salto de línea del final
 	input = strings.TrimSpace(input)
-	switch tipo {
-	case "opcion":
-		break
-	case "nombres":
-		isValidNombre := validarNombreApellido(input)
-		if !isValidNombre {
-			fmt.Println("El o los nombres no son válidos.")
-			os.Exit(1)
-		}
-		break
-	case "apellidos":
-		isValidNombre := validarNombreApellido(input)
-		if !isValidNombre {
-			fmt.Println("El o los apellidos no son válidos.")
-			os.Exit(1)
-		}
-		break
-	case "cedula":
-		isValidCed := ValidarCedula(input)
-		if !isValidCed {
-			fmt.Println("La cédula no es válido.")
-			os.Exit(1)
-		}
-		break
-	case "direccion":
-		isValidCed := validarDireccionDomicilio(input)
-		if !isValidCed {
-			fmt.Println("La dirección no es válida.")
-			os.Exit(1)
-		}
-		break
-	case "ceular":
-		isValidCed := validarNumeroCelular(input)
-		if !isValidCed {
-			fmt.Println("El celular no es válido.")
-			os.Exit(1)
-		}
-		break
-	case "correo":
-		isValidCed := validarCorreoElectronico(input)
-		if !isValidCed {
-			fmt.Println("El correo no es válido.")
-			os.Exit(1)
-		}
-		break
-	case "contraseña":
-		isValidCed := validarContrasena(input)
-		if !isValidCed {
-			fmt.Println("La contraseña no es válida. La contraseña debe ser mayor a 8 dígitos")
-			os.Exit(1)
-		}
-		break
-	case "sexo":
-		isValidCed := validarSexo(input)
-		if !isValidCed {
-			fmt.Println("El sexo no es válido.")
-			os.Exit(1)
-		}
-		break
-	}
+	// switch tipo {
+	// case "opcion":
+	// 	break
+	// case "nombres":
+	// 	isValidNombre := validarNombreApellido(input)
+	// 	if !isValidNombre {
+	// 		fmt.Println("El o los nombres no son válidos.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "apellidos":
+	// 	isValidNombre := validarNombreApellido(input)
+	// 	if !isValidNombre {
+	// 		fmt.Println("El o los apellidos no son válidos.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "cedula":
+	// 	isValidCed := ValidarCedula(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("La cédula no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "direccion":
+	// 	isValidCed := validarDireccionDomicilio(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("La dirección no es válida.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "ceular":
+	// 	isValidCed := validarNumeroCelular(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("El celular no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "correo":
+	// 	isValidCed := validarCorreoElectronico(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("El correo no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "contraseña":
+	// 	isValidCed := validarContrasena(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("La contraseña no es válida. La contraseña debe ser mayor a 8 dígitos")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "sexo":
+	// 	isValidCed := validarSexo(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("El sexo no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// }
 
 	if err != nil {
 		log.Fatal(err.Error())
@@ -106,48 +108,48 @@ func leerInputProductos(mensaje, tipo string) string {
 	input, err := resp.ReadString('\n')
 	// Eliminar el salto de línea del final
 	input = strings.TrimSpace(input)
-	switch tipo {
-	case "opcion":
-		break
-	case "nombre":
-		isValidNombre := validarNombreProducto(input)
-		if !isValidNombre {
-			fmt.Println("El nombre del producto no son válido.")
-			os.Exit(1)
-		}
-		break
-	case "codigo":
-		isValidNombre := validarItemCodigo(input)
-		if !isValidNombre {
-			fmt.Println("El código del producto no es válido.")
-			os.Exit(1)
-		}
-		break
+	// switch tipo {
+	// case "opcion":
+	// 	break
+	// case "nombre":
+	// 	isValidNombre := validarNombreProducto(input)
+	// 	if !isValidNombre {
+	// 		fmt.Println("El nombre del producto no son válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "codigo":
+	// 	isValidNombre := validarItemCodigo(input)
+	// 	if !isValidNombre {
+	// 		fmt.Println("El código del producto no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
 
-	case "descripcion":
-		isValidCed := validarDescripcion(input)
-		if !isValidCed {
-			fmt.Println("La descripción del producto no es válida.")
-			os.Exit(1)
-		}
+	// case "descripcion":
+	// 	isValidCed := validarDescripcion(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("La descripción del producto no es válida.")
+	// 		os.Exit(1)
+	// 	}
 
-		break
-	case "stock":
-		isValidCed := validarStock(input)
-		if !isValidCed {
-			fmt.Println("El stock no es válido.")
-			os.Exit(1)
-		}
-		break
-	case "pvp":
-		isValidCed := validarPVP(input)
-		if !isValidCed {
-			fmt.Println("El precio no es válido.")
-			os.Exit(1)
-		}
-		break
+	// 	break
+	// case "stock":
+	// 	isValidCed := validarStock(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("El stock no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
+	// case "pvp":
+	// 	isValidCed := validarPVP(input)
+	// 	if !isValidCed {
+	// 		fmt.Println("El precio no es válido.")
+	// 		os.Exit(1)
+	// 	}
+	// 	break
 
-	}
+	// }
 
 	if err != nil {
 		log.Fatal(err.Error())
@@ -157,167 +159,6 @@ func leerInputProductos(mensaje, tipo string) string {
 	return input
 }
 
-// ////////////////////////////////////////////////VALIDACIONES///////////////////////////////////////////
-func validarNombreApellido(nombre string) bool {
-	fmt.Println("Ingreso a validar nombre")
-	match, _ := regexp.MatchString("^[A-Za-z\\s]+$", nombre)
-	return match
-}
-
-func validarDireccionDomicilio(direccion string) bool {
-	fmt.Println("Validando dirección de domicilio:", direccion)
-	// Puedes implementar tus propias validaciones para la dirección de domicilio
-	// según los criterios de Ecuador
-	return len(direccion) > 0
-}
-
-func validarNumeroCelular(numero string) bool {
-	fmt.Println("Validando número de celular:", numero)
-	// Verificar que el número de celular tenga 10 dígitos y comience con "09"
-	match, _ := regexp.MatchString("^09\\d{8}$", numero)
-	return match
-}
-
-func validarCorreoElectronico(correo string) bool {
-	fmt.Println("Validando correo electrónico:", correo)
-	// Puedes implementar tus propias validaciones para el correo electrónico
-	// según los criterios de Ecuador
-	// Aquí se utiliza una validación básica de formato de correo electrónico
-	match, _ := regexp.MatchString("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", correo)
-	return match
-}
-
-func validarContrasena(contrasena string) bool {
-	fmt.Println("Validando contraseña:", contrasena)
-	return len(contrasena) >= 8
-}
-
-func validarEdad(edadStr string) bool {
-	fmt.Println("Validando edad:", edadStr)
-	edad, err := strconv.Atoi(edadStr)
-	if err != nil {
-		return false
-	}
-	// Verificar que la edad esté en un rango válido (por ejemplo, entre 18 y 100)
-	if edad < 18 || edad > 100 {
-		return false
-	}
-	// Verificar que no haya caracteres especiales en la edad
-	match, _ := regexp.MatchString("^[0-9]+$", edadStr)
-	return match
-}
-
-func ValidarCedula(cedula string) bool {
-	// Eliminar espacios en blanco y guiones
-	cedula = strings.ReplaceAll(cedula, " ", "")
-	cedula = strings.ReplaceAll(cedula, "-", "")
-
-	// Verificar longitud de la cédula
-	if len(cedula) != 10 {
-		return false
-	}
-
-	// Obtener provincia de la cédula (primeros dos dígitos)
-	provincia, err := strconv.Atoi(cedula[:2])
-	if err != nil {
-		return false
-	}
-
-	// Verificar provincia válida (de 1 a 24)
-	if provincia < 1 || provincia > 24 {
-		return false
-	}
-
-	// Verificar dígitos de validación
-	suma := 0
-	for i := 0; i < 9; i++ {
-		digito, err := strconv.Atoi(string(cedula[i]))
-		if err != nil {
-			return false
-		}
-
-		if i%2 == 0 {
-			digito *= 2
-			if digito > 9 {
-				digito -= 9
-			}
-		}
-
-		suma += digito
-	}
-
-	verificador, err := strconv.Atoi(string(cedula[9]))
-	if err != nil {
-		return false
-	}
-
-	suma += verificador
-
-	// Verificar que la suma sea múltiplo de 10
-	return suma%10 == 0
-}
-
-func validarSexo(sexo string) bool {
-	fmt.Println("Validando sexo:", sexo)
-	// Verificar que el sexo sea uno de los valores permitidos (por ejemplo, "M" o "F")
-	sexo = strings.ToUpper(sexo)
-	if sexo != "M" && sexo != "F" {
-		return false
-	}
-	// Verificar que no haya caracteres especiales en el sexo
-	match, _ := regexp.MatchString("^[A-Za-z]+$", sexo)
-	return match
-}
-
-// Validar el código del producto
-func validarItemCodigo(codigo string) bool {
-	fmt.Println("Validando código de producto:", codigo)
-	// Verificar que el código tenga exactamente 6 dígitos
-	match, _ := regexp.MatchString("^\\d{6}$", codigo)
-	return match
-}
-
-// Validar el nombre del producto
-func validarNombreProducto(nombre string) bool {
-	fmt.Println("Validando nombre de producto:", nombre)
-	// Verificar que el nombre no esté vacío y no contenga caracteres especiales
-	match, _ := regexp.MatchString("^[a-zA-Z0-9 ]+$", nombre)
-	return match
-}
-
-// Validar la descripción del producto
-func validarDescripcion(descripcion string) bool {
-	fmt.Println("Validando descripción de producto:", descripcion)
-	// Verificar que la descripción no esté vacía y no contenga caracteres especiales
-	match, _ := regexp.MatchString("^[a-zA-Z0-9 ]+$", descripcion)
-	return match
-}
-
-// Validar el stock del producto
-func validarStock(stockStr string) bool {
-	fmt.Println("Validando stock de producto:", stockStr)
-	stock, err := strconv.Atoi(stockStr) // Convertir el valor string a int
-	if err != nil {
-		return false // Si la conversión falla, retorna falso
-	}
-
-	// Verificar que el stock sea mayor o igual a cero
-	return stock >= 0
-}
-
-// Validar el PVP (Precio de Venta al Público) del producto
-func validarPVP(pvpStr string) bool {
-	fmt.Println("Validando PVP de producto:", pvpStr)
-	pvp, err := strconv.ParseFloat(pvpStr, 64) // Convertir el valor string a float64
-	if err != nil {
-		return false // Si la conversión falla, retorna falso
-	}
-
-	// Verificar que el PVP sea mayor a cero
-	return pvp > 0
-}
-
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////
 func main() {
 
 	server := "localhost"

@@ -3,7 +3,7 @@ package repositories
 import (
 	"log"
 
-	"github.com/Santy13226/connectiongorm.git/models"
+	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/models"
 	"gorm.io/gorm"
 )
 
