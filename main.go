@@ -16,6 +16,7 @@ import (
 	//"github.com/Santy13226/connectiongorm.git/CAPA_LOGICA"
 	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/database/repositories"
 	"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/models"
+	capalogica "github.com/Santy13226/connectiongorm.git/CAPA_LOGICA"
 	//"golang.org/x/crypto/bcrypt"
 )
 
@@ -32,66 +33,64 @@ func leerInput(mensaje, tipo string) string {
 	input, err := resp.ReadString('\n')
 	// Eliminar el salto de línea del final
 	input = strings.TrimSpace(input)
-	// switch tipo {
-	// case "opcion":
-	// 	break
-	// case "nombres":
-	// 	isValidNombre := validarNombreApellido(input)
-	// 	if !isValidNombre {
-	// 		fmt.Println("El o los nombres no son válidos.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "apellidos":
-	// 	isValidNombre := validarNombreApellido(input)
-	// 	if !isValidNombre {
-	// 		fmt.Println("El o los apellidos no son válidos.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "cedula":
-	// 	isValidCed := ValidarCedula(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("La cédula no es válido.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "direccion":
-	// 	isValidCed := validarDireccionDomicilio(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("La dirección no es válida.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "ceular":
-	// 	isValidCed := validarNumeroCelular(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("El celular no es válido.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "correo":
-	// 	isValidCed := validarCorreoElectronico(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("El correo no es válido.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "contraseña":
-	// 	isValidCed := validarContrasena(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("La contraseña no es válida. La contraseña debe ser mayor a 8 dígitos")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// case "sexo":
-	// 	isValidCed := validarSexo(input)
-	// 	if !isValidCed {
-	// 		fmt.Println("El sexo no es válido.")
-	// 		os.Exit(1)
-	// 	}
-	// 	break
-	// }
+	switch tipo {
+	case "opcion":
+
+	case "nombres":
+		isValidNombre := capalogica.ValidarNombreApellido(input)
+		if !isValidNombre {
+			fmt.Println("El o los nombres no son válidos.")
+			os.Exit(1)
+		}
+
+	case "apellidos":
+		isValidNombre := capalogica.ValidarNombreApellido(input)
+		if !isValidNombre {
+			fmt.Println("El o los apellidos no son válidos.")
+			os.Exit(1)
+		}
+
+	case "cedula":
+		isValidCed := capalogica.ValidarCedula(input)
+		if !isValidCed {
+			fmt.Println("La cédula no es válido.")
+			os.Exit(1)
+		}
+
+	case "direccion":
+		isValidCed := capalogica.ValidarDireccionDomicilio(input)
+		if !isValidCed {
+			fmt.Println("La dirección no es válida.")
+			os.Exit(1)
+		}
+
+	case "ceular":
+		isValidCed := capalogica.ValidarNumeroCelular(input)
+		if !isValidCed {
+			fmt.Println("El celular no es válido.")
+			os.Exit(1)
+		}
+
+	case "correo":
+		isValidCed := capalogica.ValidarCorreoElectronico(input)
+		if !isValidCed {
+			fmt.Println("El correo no es válido.")
+			os.Exit(1)
+		}
+
+	case "contraseña":
+		isValidCed := capalogica.ValidarContrasena(input)
+		if !isValidCed {
+			fmt.Println("La contraseña no es válida. La contraseña debe ser mayor a 8 dígitos")
+			os.Exit(1)
+		}
+	case "sexo":
+		isValidCed := capalogica.ValidarSexo(input)
+		if !isValidCed {
+			fmt.Println("El sexo no es válido.")
+			os.Exit(1)
+		}
+	}
 
 	if err != nil {
 		log.Fatal(err.Error())
