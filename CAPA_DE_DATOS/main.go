@@ -9,9 +9,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Santy13226/CAPA_DE_DATOS/connectiongorm.git/CAPA_DE_DATOS/connection"
-	"github.com/Santy13226/CAPA_DE_DATOS/connectiongorm.git/CAPA_DE_DATOS/database/repositories"
-	"github.com/Santy13226/CAPA_DE_DATOS/connectiongorm.git/CAPA_DE_DATOS/models"
+	"github.com/Santy13226/connectiongorm.git/connection"
+	//"github.com/Santy13226/connectiongorm.git/CAPA_DE_DATOS/connection"
+
+	"github.com/Santy13226/connectiongorm.git/models"
+	"github.com/Santy13226/connectiongorm.git/database/repositories"
 	"golang.org/x/crypto/bcrypt"
 )
 
