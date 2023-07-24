@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var bd *gorm.DB
+var db *gorm.DB
 
 func GetMySQLConnection(user, password, dbname, host, port string) (*gorm.DB, error) {
 	dsn := "%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local"

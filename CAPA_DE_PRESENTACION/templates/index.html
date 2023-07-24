@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--<link
+      rel="stylesheet"
+      href="/CAPA_DE_PRESENTACION/static/estilos/styleChatbot.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/CAPA_DE_PRESENTACION/static/estilos/index.css"
+    />
+    <link rel="stylesheet" href="../static/estilos/styleChatbot.css">
+    -->
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/index.css">
+    <title> Chatbot</title>
+
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <script>
+      function enviarConsulta(cedula) {
+        // Enviar la consulta a Dialogflow
+        var chatbot = document.querySelector('df-messenger');
+        chatbot.send({ event: 'consulta-cedula', cedula: cedula });
+      }
+    </script>
+
+  </head>
+  <body>
+    <main>
+      <div class="contenedorContenido">
+          <div class="container-index_items">
+              <!--<span class="img-logo"></span>-->
+              <p class="msj-welcome tituloChat">PharmacyBot</p>
+              <p class="msj-description">Accede a tu cuenta para continuar</p>
+              <div class="container-buttons_index">
+                  <a href="/clientes/login" class="button-login">Iniciar Sesion</a>
+                  <a href="/clientes/registro" class="button-signup">Registrate</a>
+              </div>
+          </div>
+          
+      </div>
+    </div>
+  </main>
+  </body>
+</html>

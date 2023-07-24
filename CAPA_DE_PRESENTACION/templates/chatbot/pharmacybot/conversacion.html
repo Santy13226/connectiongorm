@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="/CAPA_DE_PRESENTACION/static/estilos/styleChatbot.css"
+      href="/CAPA_DE_PRESENTACION/static/estilos/logout.css"
+
+    />
+    <link
+      rel="stylesheet"
+      href="/CAPA_DE_PRESENTACION/static/estilos/styleChatbotConversacion.css"
+      href="/CAPA_DE_PRESENTACION/static/estilos/styleChatbot.css"
+      href="/CAPA_DE_PRESENTACION/static/estilos/logout.css"
+    />
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/responsive.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>ChatBot</title>
+</head>
+<body onresize="tamanioPantalla()">
+    <main>
+        <div class="container-interfaz">
+
+          <div class="botonFlotante" id="botonFlotanteOpciones" onclick="abrirContenedorLeft()"><img class="imgMenu" src="/CAPA_DE_PRESENTACION/static/imagenes/menu.png" alt="sad"></div>
+            
+            <div class="container-left" id="contLeft" >
+            
+                <div style="
+                flex-grow: 3;
+                flex-basis: 0;
+                width: 90%;
+                font-weight: bold;
+                display: flex;
+                justify-content: start;
+                flex-direction: column; align-items: center;
+                " class="container-conversation">
+                    <a style="text-decoration: none; background-color: rgb(32, 90, 117);
+                    color: white; padding: 10px;
+                    width: 100%;
+                    border-radius: 10px;
+                    margin-bottom: 20px;
+                    font-weight: bold;
+                    " href="/registrarConversacion">Nuevo chat</a>
+                    
+                    {{range $index, $conversacion := .ConversacionesChatbotTodos}}
+
+                    <div class="contenedorConversacionesA">
+                      <div class="contenedorImagenA{{$conversacion.ID_CONVERSACION}}" onclick="eliminarConversacion('{{$conversacion.ID_CONVERSACION}}')" >
+                        <a  class="contenedorImagenAA" href="#"><img  src="/CAPA_DE_PRESENTACION/static/imagenes/eliminar.png" alt="sad"></a>
+                      </div>
+                        <a class="conversacionesA"  href="/chatbot/pharmacybot/conversacion/?id={{$conversacion.ID_CONVERSACION}}"> Conversación </a>
+                      </div>
+                        
+                        <br>
+
+                        {{end}}
+                    
+                    <!-- <button class="conversation">
+                        <span class="icon-message"></span>
+                        Precios de productos en oferta
+                    </button>
+                    <button class="conversation">
+                        <span class="icon-message"></span>
+                        Precios de productos en oferta
+                    </button>
+                    <button class="conversation">
+                        <span class="icon-message"></span>
+                        Precios de productos en oferta
+                    </button> -->
+                </div>
+
+
+                
+                <div id="inactive" class="container-logout">
+                    <div class="logout-items">
+                        <a target='_blank' href="https://wwwhatsnew.com/2023/04/04/ingenieria-de-prompts-creando-conversaciones-mas-interactivas-y-naturales-con-chatbots-de-ia/#:~:text=%C2%BFQu%C3%A9%20es%20la%20ingenier%C3%ADa%20de,respuestas%20%C3%BAtiles%20y%20contextualmente%20relevantes."><span class="icon-help"></span>Ayuda</a>
+                        <a href=""><span class="icon-clear"></span>Limpiar conversaciones</a>
+                        <a href="/CAPA_DE_PRESENTACION/templates/clientes/settings.html"><span class="icon-settings"></span>Ajustes</a>
+                        <a href="/logout"><span class="icon-logout"></span>Cerrar sesion</a>
+                    </div>
+                </div>
+                <div class="container-user" style="width: 90%; display: flex; justify-content: center;"
+                >
+                    <button class="button-user"><span class="icon-user"></span>{{.UserData.Nombres}}<span class="icon-points"></span></button>
+                </div>
+
+                
+            </div>
+            <div class="container-right" id="contRight">
+
+                
+                {{ $contador := 0 }}
+{{ range .ConversacionesChatbot }}
+    <ul style="overflow-y: auto; width: 100%; height: 100%; color: white;" id="conversacionesList">
+        {{ range .Mensajes }}
+            {{ if eq $contador 0 }}
+                <div class="contenedorPregunta" style="font-size: 1.1rem;">
+                    <label class="pregunta burbuja">
+                        <li style="list-style: none; background-color: estilo-uno;">{{ . }}</li>
+                    </label>
+                </div>
+                {{ $contador = 1 }}
+            {{ else }}
+                <div style="display: flex; justify-content: end; align-items: center;font-size: 1.1rem;" class="contenedorPregunta">
+                    <label style="background-color: rgb(80, 105, 98);" class="pregunta burbuja">
+                        <li style="list-style: none; background-color: estilo-dos;">{{ . }}</li>
+                    </label>
+                </div>
+                {{ $contador = 0 }}
+            {{ end }}
+        {{ end }}
+    
+{{ end }}
+
+{{range .Conversaciones}}
+<li>
+    <div class="contenedorPregunta">
+        <label class="pregunta burbuja">
+        {{.Pregunta}}
+    </label>
+    </div>
+    <div class="contenedorRespuesta">
+        <label class="respuesta burbuja">
+    {{.Respuesta}}
+</label>
+</div>
+</li>
+{{end}}
+</ul>
+            
+                <!--<ul style="min-height: 0;
+                margin: 0%;
+                padding: 0%;" id="conversacionesList">    
+              
+                </ul>-->
+
+                
+                <form onsubmit="return false" class="formConsulta">
+                    <input id="preguntaInput" type="text" name="pregunta" placeholder="Escribe tu pregunta aquí">
+                    <button type="submit" onclick="enviarPregunta()">Enviar</button>
+                </form>
+
+                
+                <input type="text" value="{{.IDConversacion}}" id="idconversacion" style="display: none;">
+
+                
+
+
+            </div>
+        </div>
+        <script>
+
+
+
+
+var contenidoOriginal = null;
+
+document.addEventListener('DOMContentLoaded', function () {  
+  var isFirstVisit = localStorage.getItem('isFirstVisit');
+  if (!isFirstVisit) {
+    $("#conversacionesList").empty();
+    localStorage.setItem('isFirstVisit', true);
+  }
+});
+
+// Evento beforeunload que se activa cuando el usuario abandona la página
+window.addEventListener("beforeunload", function (event) {
+    actualizarChat()
+});
+
+window.addEventListener("popstate", function(event) {
+    actualizarChat()
+});
+
+function enviarPregunta() {
+    var preguntaInput = $("#preguntaInput").val().trim();
+  
+    if (preguntaInput === "") {
+      return;
+    }
+  
+    $.post("/pregunta", { pregunta: preguntaInput }, function (data) {
+      // Manejar la respuesta exitosa del servidor
+      actualizarConversaciones(data);
+      // Desplazar hacia abajo
+      $("#conversacionesList").scrollTop($("#conversacionesList")[0].scrollHeight);
+    }).fail(function (xhr, status, error) {
+      // Manejar errores de la llamada AJAX, si es necesario
+      console.log("Error al enviar la pregunta:", error);
+    });
+  
+    $("#preguntaInput").val("");
+  }
+  function actualizarConversaciones(conversaciones) {
+  var conversacionesList = document.getElementById("conversacionesList");
+
+  for (var i = 0; i < conversaciones.length; i++) {
+    var conversacion = conversaciones[i];
+
+    // Verificar si la conversación ya existe en la lista
+    var conversacionExistente = Array.from(conversacionesList.getElementsByClassName("pregunta")).find(function (elemento) {
+      return elemento.innerHTML === conversacion.Pregunta;
+    });
+
+    if (!conversacionExistente) {
+      agregarConversacion(conversacion.Pregunta, conversacion.Respuesta);
+    }
+  }
+}
+
+function actualizarConversacionAJAX(idConversacion) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/actualizarConversacion/?id=' + idConversacion, true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            var conversaciones = JSON.parse(xhr.responseText);
+            actualizarConversaciones(conversaciones);
+            resolve(); // Resuelve la Promesa una vez que se completa la actualización
+          } else {
+            reject(new Error('Error al actualizar la conversación'));
+          }
+        }
+      };
+
+      xhr.send();
+    });
+  }
+
+  async function actualizarChat() {
+    var idConversacion = document.getElementById('idconversacion').value;
+
+    try {
+      await actualizarConversacionAJAX(idConversacion);
+      // Después de actualizar, redirigir al usuario o realizar otra acción aquí
+      // Por ejemplo, redireccionar a otra página:
+      // window.location.href = '/otra_pagina';
+
+      // O realizar otra acción
+      // ...
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Esperar a que se complete la carga del documento
+  document.addEventListener('DOMContentLoaded', function () {
+    // Llamar a la función actualizarChat() una vez que se complete la carga del documento
+    actualizarChat();
+
+    // Permitir que el usuario realice otras acciones después de completar la actualización
+    // por ejemplo, recargar la página
+    window.onbeforeunload = function () {
+      // Vuelve a asignar el evento 'onbeforeunload' para permitir que el usuario recargue la página
+      window.onbeforeunload = null;
+    };
+  });
+
+
+  
+  function agregarConversacion(pregunta, respuesta) {
+    var conversacionesList = $("#conversacionesList");
+  
+    var li = $("<li>").addClass("conversacion");
+    var contenedorPregunta = $("<div>").addClass("contenedorPregunta");
+    var preguntaLabel = $("<label>").addClass("pregunta burbuja").text(pregunta);
+    var contenedorRespuesta = $("<div>").addClass("contenedorRespuesta");
+    var respuestaLabel = $("<label>").addClass("respuesta burbuja");
+      var respuestaLabelaux = $("<label>").addClass("respuesta burbuja");
+        var respuestaLabelauxdos = $("<label>").addClass("respuesta burbuja");
+      
+          if (respuesta.includes("*")) {
+    // Respuesta con asteriscos
+    var partesRespuesta = respuesta.split("*");
+    var respuestaFinal = partesRespuesta.join("<br>");
+    var respuestaLabel = $("<label>").addClass("respuesta burbuja").html(respuestaFinal);
+    contenedorRespuesta.append(respuestaLabel);
+  } else {
+    // Respuesta sin asteriscos
+    var respuestaLabel = $("<label>").addClass("respuesta burbuja").text(respuesta);
+    contenedorRespuesta.append(respuestaLabel);
+  }
+
+    
+    var respuestaLabel = $("<label>").addClass("respuesta burbuja").text(respuesta)
+  
+    contenedorPregunta.append(preguntaLabel);
+    
+    li.append(contenedorPregunta);
+    li.append(contenedorRespuesta);
+    conversacionesList.append(li);
+  }
+
+$(document).ready(function() {
+// Manejar el evento click del botón
+$('#btnNewChat').click(function() {
+    // Realizar la llamada AJAX a la función registrarConversacionHandler
+    $.ajax({
+        type: 'POST', // Método HTTP POST
+        url: '/registrarConversacion', // Reemplaza con la URL correcta hacia tu función registrarConversacionHandler
+        success: function(data) {
+            // Manejar la respuesta exitosa de la llamada AJAX, si es necesario
+            console.log('Conversación registrada exitosamente');
+        },
+        error: function(xhr, status, error) {
+            // Manejar errores de la llamada AJAX, si es necesario
+            console.log('Error al registrar la conversación:', error);
+        }
+    });
+});
+
+});
+
+document.getElementById("enviarBtn").addEventListener("click", enviarPregunta);
+
+
+function tamanioPantalla(){
+  let ancho =  document.documentElement.clientWidth;
+  let contenedorI = document.getElementById("contLeft")
+  if(ancho>=1000){  
+    contenedorI.style.display="flex";  
+    contenedorI.style.maxWidth="20%";  
+  }else{
+    contenedorI.style.display="none";   
+  }
+}
+
+function abrirContenedorLeft(){
+  let contenedorI = document.getElementById("contLeft")
+  let contenedorD = document.getElementById("contRight")
+  let boton = document.getElementById("botonFlotanteOpciones")
+
+  if(contenedorD.style.display==="none"){
+    contenedorD.style.display="flex";
+    contenedorI.style.display="none";
+    return
+  }
+  contenedorI.style.display="flex";
+  contenedorI.style.Width= "100%"
+  contenedorD.style.display="none";
+  
+}
+
+function eliminarConversacion(id) {
+  $.ajax({
+    type: 'GET',
+    url: '/eliminarConversacion/?id=' + id,
+    success: function(data) {
+      // Manejar la respuesta exitosa del servidor, si es necesario
+      console.log('Conversación eliminada exitosamente');
+    },
+    error: function(xhr, status, error) {
+      // Manejar errores de la llamada AJAX, si es necesario
+      console.log('Error al eliminar la conversación:', error);
+    }
+  });
+}
+
+        </script>
+
+    </main>
+<script src="/CAPA_DE_PRESENTACION/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/login1.css">
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/login.css">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="695882531976-d4jnr3kjvu2r7hmsqbojs2stbeci700l.apps.googleusercontent.com">
+
+    
+    <title>Login</title>
+</head>
+<body>
+   
+    <div class="container-login">
+        <div class="container-login_items">
+            <span class="img-icon_login"></span>
+            <div id="container-form_login" class="container-form_login">
+                <p class="welcome-login">Bienvenido De Nuevo</p>
+
+                <form id="formulario" class="form-singup" action="/loginCliente" method="POST">
+                    <input type="text" id="email" name="email" class="input-login_email" placeholder="Dirección email" oninput="validarCamposString(this.value, 'email')">
+                    <input type="password" id="password" name="password" class="input-login_password" placeholder="Contraseña">
+                    <button type="submit" id="botonLogin" class="button-continue_login">Continuar</button>
+                </form>
+
+                <div class="nuevaCuenta">
+                    <a href="/CAPA_DE_PRESENTACION/templates/clientes/resetPassword.html">Recuperar la contraseña</a>
+                    <p class="create-check">¿No tienes una cuenta? <a href="/clientes/registro" class="a-createcheck">Regístrate</a></p>
+                </div>
+                <div class="line"></div> 
+          <script>
+               function handleCredentialResponse(response) {
+                    console.log("Encoded JWT ID token: " + response.credential);
+
+                    // Enviar los parámetros a Go utilizando Fetch
+                    fetch('/verifyToken', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        clientID: '695882531976-ekdruiina3tndc6u3prc3v5c52pb3v02.apps.googleusercontent.com',
+                        token: response.credential
+                      })
+                    })
+                    .then(response => {
+                      if (response.ok) {
+                        // La verificación del token fue exitosa
+                        window.location.href = "/chatbot/pharmacybot";
+                      } else {
+                        // La verificación del token falló
+                        console.log('Error al verificar el token');
+                      }
+                    })
+                    .catch(error => {
+                      console.log('Error de red:', error);
+                    });
+                  }
+
+                  window.onload = function () {
+                    google.accounts.id.initialize({
+                      client_id: "695882531976-ekdruiina3tndc6u3prc3v5c52pb3v02.apps.googleusercontent.com",
+                      callback: handleCredentialResponse
+                    });
+
+                    google.accounts.id.renderButton(
+                      document.getElementById("buttonDiv"),
+                      { theme: "outline", size: "large" }  // customization attributes
+                    );
+
+                    google.accounts.id.prompt(); // también mostrar el diálogo One Tap
+                  }
+
+            </script>
+            <div id="buttonDiv"></div>
+              
+            </div>
+        </div>
+    </div>
+        
+    </script>
+</body>
+</html>

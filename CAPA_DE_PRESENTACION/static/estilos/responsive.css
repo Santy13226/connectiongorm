@@ -1,0 +1,96 @@
+
+body{
+    overflow-x: hidden;
+}
+.container-right{
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.container-left{
+    display: flex;
+}   
+.imgMenu{
+    width: 5%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+}
+.botonFlotante{
+    display: none;
+}
+.container-logout{
+    position: absolute;
+    top: 49%;
+    width: 20%;
+    left: 0%;
+    
+}
+
+.contenedorConversacionesA{
+    background-color: #3793be;
+    height: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+.contenedorImagenA{
+    height: 100%; display: flex; align-items: center;justify-content: start;
+}
+.contenedorImagenAA{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.contenedorImagenAA img{
+    width: 30%;
+    height: 20%;
+}
+.conversacionesA{
+    
+    width: 100%;
+    text-decoration: none;
+        background-color: transparent;
+        color: white;
+        padding: 10px;
+    width: 100%;
+    max-height: 7%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+@media only screen and (max-width:1000px) {
+    .contenedorImagenAA img{
+        width: 10%;
+        height: 15%;
+    }
+    .container-left{
+        display: none;
+    }   
+    .container-logout{
+        position: absolute;
+        top: 49%;
+        width: 40%;
+        left: 26%;
+        
+    }
+    .botonFlotante{
+        display: block;
+        position: absolute;
+        width: 100%;
+        border-radius: 50%;
+        padding: 10px;
+        color: white;
+        font-weight: bold;
+        top: 10px;
+        left: 91%;
+        cursor: pointer;
+    }   
+}

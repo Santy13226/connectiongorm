@@ -1,0 +1,73 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#inactivo{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.container{
+    width: 500px;
+    height: 250px;
+    background-color: #202123;
+    padding: 25px;
+    border-radius: 8px;
+}
+.container-items p{
+    color: white;
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.header .icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/cerrar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.header .icon:hover{
+    cursor: pointer;
+}
+.form-password{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    outline: none;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+.form-password .change-password{
+    border: 1px solid black;
+    padding: 15px;
+    outline: none;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+.form-password .button-continue_change{
+    text-decoration: none;
+    padding: 15px;
+    background-color: rgb(0, 70, 70);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+    border-radius: 12px;
+}

@@ -8,29 +8,65 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var db *gorm.DB
+var localDB *gorm.DB
+var elephantSQLDB *gorm.DB
 
-func GetConnection(host, user, password, dbname, port string) (*gorm.DB, error) {
+func GetLocalConnection() (*gorm.DB, error) {
+	if localDB != nil {
+		return localDB, nil
+	}
+
 	const dsn = "host=%s user=%s password=%s dbname=%s port=%s sslmode=disable"
 	var err error
-	db, err = gorm.Open(postgres.Open(fmt.Sprintf(dsn, host, user, password, dbname, port)),
+	localDB, err = gorm.Open(postgres.Open(fmt.Sprintf(dsn, "localhost", "postgres", "admin123", "chatbot", "5432")),
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{
 				SingularTable: true},
 		})
-	return db, err
+	return localDB, err
 }
 
-func CloseConnection() error {
-	if db != nil {
-		sqlDB, err := db.DB()
+func GetElephantSQLConnection() (*gorm.DB, error) {
+	if elephantSQLDB != nil {
+		return elephantSQLDB, nil
+	}
+
+	const dsn = "host=%s user=%s password=%s dbname=%s port=%s sslmode=require"
+	var err error
+	elephantSQLDB, err = gorm.Open(postgres.Open(fmt.Sprintf(dsn, "motty.db.elephantsql.com", "jkjilvyi", "fW_GfJ6RUn9kbYD5HmVFejQcBOyzhb96", "jkjilvyi", "5432")),
+		&gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				SingularTable: true},
+		})
+	return elephantSQLDB, err
+}
+
+func CloseLocalConnection() error {
+	if localDB != nil {
+		sqlDB, err := localDB.DB()
 		if err != nil {
 			return err
 		}
 		err = sqlDB.Close()
-		if err != nil { 
+		if err != nil {
 			return err
 		}
+		localDB = nil
+	}
+	return nil
+}
+
+func CloseElephantSQLConnection() error {
+	if elephantSQLDB != nil {
+		sqlDB, err := elephantSQLDB.DB()
+		if err != nil {
+			return err
+		}
+		err = sqlDB.Close()
+		if err != nil {
+			return err
+		}
+		elephantSQLDB = nil
 	}
 	return nil
 }

@@ -1,0 +1,14 @@
+#formulario .mensajeError {
+    display: none;
+}
+
+#formulario .errorValidacion{
+    border: 4px solid rgba(190, 14, 14, 0.534);
+    background-color: rgba(189, 89, 89, 0.158);
+}
+
+#formulario .exitoValidacion{
+    border: 4px solid rgba(21, 153, 65, 0.534);
+    background-color: rgba(89, 189, 127, 0.158);
+    
+}

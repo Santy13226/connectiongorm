@@ -1,0 +1,25 @@
+#formulario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #formulario input{
+    width: 100%;
+  }
+
+  #formulario button{
+width: 100%;
+  }
+  
+  .nuevaCuenta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .nuevaCuenta a {
+    text-decoration: none;
+  }

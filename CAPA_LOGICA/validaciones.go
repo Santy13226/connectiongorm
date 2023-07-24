@@ -1,62 +1,62 @@
 package capalogica
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // ////////////////////////////////////////////////VALIDACIONES///////////////////////////////////////////
 func ValidarNombreApellido(nombre string) bool {
-	fmt.Println("Ingreso a validar nombre")
 	match, _ := regexp.MatchString("^[A-Za-z\\s]+$", nombre)
+
 	return match
 }
 
 func ValidarDireccionDomicilio(direccion string) bool {
-	fmt.Println("Validando dirección de domicilio:", direccion)
 	// Puedes implementar tus propias validaciones para la dirección de domicilio
 	// según los criterios de Ecuador
 	return len(direccion) > 0
 }
 
 func ValidarNumeroCelular(numero string) bool {
-	fmt.Println("Validando número de celular:", numero)
 	// Verificar que el número de celular tenga 10 dígitos y comience con "09"
 	match, _ := regexp.MatchString("^09\\d{8}$", numero)
+
 	return match
 }
 
 func ValidarCorreoElectronico(correo string) bool {
-	fmt.Println("Validando correo electrónico:", correo)
+
 	// Puedes implementar tus propias validaciones para el correo electrónico
 	// según los criterios de Ecuador
 	// Aquí se utiliza una validación básica de formato de correo electrónico
 	match, _ := regexp.MatchString("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", correo)
+
 	return match
 }
 
 func ValidarContrasena(contrasena string) bool {
-	fmt.Println("Validando contraseña:", contrasena)
+
 	return len(contrasena) >= 8
 }
 
-func ValidarEdad(edadStr string) bool {
-	fmt.Println("Validando edad:", edadStr)
-	edad, err := strconv.Atoi(edadStr)
-	if err != nil {
-		return false
-	}
-	// Verificar que la edad esté en un rango válido (por ejemplo, entre 18 y 100)
-	if edad < 18 || edad > 100 {
-		return false
-	}
-	// Verificar que no haya caracteres especiales en la edad
-	match, _ := regexp.MatchString("^[0-9]+$", edadStr)
-	return match
-}
+func ValidarEdad(fechaNac time.Time) bool {
+	// Obtener la fecha actual
+	fechaActual := time.Now()
 
+	// Calcular la edad en años
+	edad := fechaActual.Year() - fechaNac.Year()
+
+	// Verificar si aún no se ha celebrado el cumpleaños este año
+	if fechaActual.Month() < fechaNac.Month() || (fechaActual.Month() == fechaNac.Month() && fechaActual.Day() < fechaNac.Day()) {
+		edad--
+	}
+
+	// Verificar que la edad sea mayor o igual a 18
+	return edad >= 18
+}
 func ValidarCedula(cedula string) bool {
 	// Eliminar espacios en blanco y guiones
 	cedula = strings.ReplaceAll(cedula, " ", "")
@@ -65,6 +65,13 @@ func ValidarCedula(cedula string) bool {
 	// Verificar longitud de la cédula
 	if len(cedula) != 10 {
 		return false
+	}
+
+	// Verificar que todos los caracteres sean dígitos
+	for _, char := range cedula {
+		if char < '0' || char > '9' {
+			return false
+		}
 	}
 
 	// Obtener provincia de la cédula (primeros dos dígitos)
@@ -78,37 +85,42 @@ func ValidarCedula(cedula string) bool {
 		return false
 	}
 
+	// Verificar el tercer dígito (debe ser 6, 9 o un número entre 0 y 5)
+	tipo := cedula[2]
+	if tipo != '6' && tipo != '9' && (tipo < '0' || tipo > '5') {
+		return false
+	}
+
 	// Verificar dígitos de validación
 	suma := 0
+	coeficientes := []int{2, 1, 2, 1, 2, 1, 2, 1, 2}
 	for i := 0; i < 9; i++ {
 		digito, err := strconv.Atoi(string(cedula[i]))
 		if err != nil {
 			return false
 		}
-
-		if i%2 == 0 {
-			digito *= 2
-			if digito > 9 {
-				digito -= 9
-			}
+		producto := digito * coeficientes[i]
+		if producto >= 10 {
+			producto -= 9
 		}
-
-		suma += digito
+		suma += producto
 	}
 
-	verificador, err := strconv.Atoi(string(cedula[9]))
+	// Verificar el último dígito de validación
+	ultimoDigito, err := strconv.Atoi(string(cedula[9]))
 	if err != nil {
 		return false
 	}
+	digitoVerificador := (suma + ultimoDigito) % 10
+	if digitoVerificador != 0 {
+		return false
+	}
 
-	suma += verificador
-
-	// Verificar que la suma sea múltiplo de 10
-	return suma%10 == 0
+	return true
 }
 
 func ValidarSexo(sexo string) bool {
-	fmt.Println("Validando sexo:", sexo)
+
 	// Verificar que el sexo sea uno de los valores permitidos (por ejemplo, "M" o "F")
 	sexo = strings.ToUpper(sexo)
 	if sexo != "M" && sexo != "F" {
@@ -121,7 +133,7 @@ func ValidarSexo(sexo string) bool {
 
 // Validar el código del producto
 func ValidarItemCodigo(codigo string) bool {
-	fmt.Println("Validando código de producto:", codigo)
+
 	// Verificar que el código tenga exactamente 6 dígitos
 	match, _ := regexp.MatchString("^\\d{6}$", codigo)
 	return match
@@ -129,15 +141,15 @@ func ValidarItemCodigo(codigo string) bool {
 
 // Validar el nombre del producto
 func ValidarNombreProducto(nombre string) bool {
-	fmt.Println("Validando nombre de producto:", nombre)
+
 	// Verificar que el nombre no esté vacío y no contenga caracteres especiales
-	match, _ := regexp.MatchString("^[a-zA-Z0-9 ]+$", nombre)
+	match, _ := regexp.MatchString("^[A-Za-z\\s]+$", nombre)
 	return match
 }
 
 // Validar la descripción del producto
 func ValidarDescripcion(descripcion string) bool {
-	fmt.Println("Validando descripción de producto:", descripcion)
+
 	// Verificar que la descripción no esté vacía y no contenga caracteres especiales
 	match, _ := regexp.MatchString("^[a-zA-Z0-9 ]+$", descripcion)
 	return match
@@ -145,7 +157,7 @@ func ValidarDescripcion(descripcion string) bool {
 
 // Validar el stock del producto
 func ValidarStock(stockStr string) bool {
-	fmt.Println("Validando stock de producto:", stockStr)
+
 	stock, err := strconv.Atoi(stockStr) // Convertir el valor string a int
 	if err != nil {
 		return false // Si la conversión falla, retorna falso
@@ -157,7 +169,7 @@ func ValidarStock(stockStr string) bool {
 
 // Validar el PVP (Precio de Venta al Público) del producto
 func ValidarPVP(pvpStr string) bool {
-	fmt.Println("Validando PVP de producto:", pvpStr)
+
 	pvp, err := strconv.ParseFloat(pvpStr, 64) // Convertir el valor string a float64
 	if err != nil {
 		return false // Si la conversión falla, retorna falso

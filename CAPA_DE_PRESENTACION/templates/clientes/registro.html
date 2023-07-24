@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="695882531976-d4jnr3kjvu2r7hmsqbojs2stbeci700l.apps.googleusercontent.com">
+
+<script src="/CAPA_DE_PRESENTACION/static/js/validaciones.js"></script>
+        <!--<script src="../../static/js/validaciones.js"></script>	-->
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/registro1.css"/>
+    <link rel="stylesheet" href="/CAPA_DE_PRESENTACION/static/estilos/registro.css"/>
+    <title>Registro</title>
+  </head>
+  <body>
+    <div class="container-sigup" id="container-sigup">
+      
+      <div class="container-sigup_items">
+        <span class="img-icon_sigup"></span>
+        <p class="welcome-sigup">Crea una cuenta</p>
+        <div class="container-form_sigup">
+          
+          <form 
+          id="formulario"
+          class="form-singup" method="POST" action="/enviarDatosCliente"
+          onsubmit="return false">
+
+
+          {{ if .ShowError }}
+            <p>
+          Error: {{ .ErrorMessage }}
+            </p>
+          {{ end }}
+
+
+          <div class="contenedorInputCedula">
+          <label>Cédula:</label>
+          <br />
+            <input  
+            style="width: 100%;"
+              type="text"
+              id="cedula"
+              name="cedula"
+              placeholder="Cedula"
+              required
+              pattern="^\d{10}$"
+              title="La cédula debe tener 10 dígitos numéricos válidos"
+              oninput="validarCamposNumericos(this.value,'cedula')"
+            />
+          </div>
+            <br />
+            
+            <div class="contenedorInputNombre">
+            <label>Nombres:</label>
+            <input
+            style="width: 100%;"
+              type="text"
+              id="nombres"
+              name="nombres"
+              placeholder="Nombres"
+              required
+              pattern="^[A-Za-z\s]+$"
+              title="Ingrese solo letras en el campo de nombres"
+              oninput="validarCamposString(this.value,'nombre')"
+            />
+          </div>
+            <br />
+            <div class="contenedorInputApellido">
+            <label>Apellidos:</label>
+            <input
+            style="width: 100%;"
+              type="text"
+              id="apellidos"
+              name="apellidos"
+              placeholder="Apellidos"
+              required
+              pattern="^[A-Za-z\s]+$"
+              title="Ingrese solo letras en el campo de apellidos"
+              oninput="validarCamposString(this.value,'apellido')"
+              />
+            </div>
+            <br />
+            <div class="contenedorInputDireccion">
+            <label>Dirección:</label>
+            <input
+            style="width: 100%;"
+              type="text"
+              id="direccion"
+              name="direccion"
+              placeholder="Direccion"
+              required
+            />
+          </div>
+          <br />
+            <div class="contenedorInputCelular">
+            <label for="">Célular:</label> <br>
+            <input
+            style="width: 100%;"
+              type="text"
+              id="celular"
+              name="celular"
+              placeholder="Celular"
+              required
+              pattern="^09\d{8}$"
+              title="El número de celular debe tener 10 dígitos numéricos y empezar con 09"
+              oninput="validarCamposNumericos(this.value, 'numero')"
+            /></div><br />
+
+            <div class="contenedorInputEmail">
+            <label for="">Email:</label> <br>
+            <input
+            style="width: 100%;"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Correo Electronico"
+              required
+              pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+              title="Ingrese un correo electrónico válido"
+              oninput="validarCamposString(this.value,'email')"
+            /></div><br />
+            <label for="">Contraseña:</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Contrasena"
+              required
+              pattern="^.{8,}$"
+              title="La contraseña debe tener al menos 8 caracteres"
+            /><br />
+            
+            <div class="contenedorInputEdad">
+              <label for="fechaNac">Fecha de nacimiento:</label>
+              <input
+                type="date"
+                name="fechaNac"
+                id="fechaNac"
+                required
+                min="10"
+                max="100"
+                oninput="validarCamposEdad(this.value, 'fechaNac')"
+              />
+              <div id="fechaNacError" style="color: red;"></div>
+            </div>
+            
+
+
+            <br />
+            
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" id="sexo" required style="width: 100%; padding: 15px; border-radius: 10px;" class="contenedorInputSexo">
+              <option value="" selected disabled>Seleccione el sexo</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            </select><br />
+            <br />
+            
+            <br />
+            <input class="button-continue_sigup" type="submit" value="Registrar" />
+          </form>
+          <p class="already-check">
+            Ya tienes una cuenta?<a
+              href="/clientes/login"
+              class="a-alreadycheck"
+              >Inicia Sesion</a
+            >
+          </p>
+          <div class="line"></div>
+          <div class="o">O</div>
+          <div class="line"></div>
+
+
+          <!-- AÑADE FUNCIONAMIENTO DE GOOGLE ACCOUNT
+ -->
+          <script>
+            function handleCredentialResponse(response) {
+                 console.log("Encoded JWT ID token: " + response.credential);
+      
+                 // Enviar los parámetros a Go utilizando Fetch
+                 fetch('/verifyToken', {
+                   method: 'POST',
+                   headers: {
+                     'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                     clientID: '695882531976-ekdruiina3tndc6u3prc3v5c52pb3v02.apps.googleusercontent.com',
+                     token: response.credential
+                   })
+                 })
+                 .then(response => {
+                   if (response.ok) {
+                     // La verificación del token fue exitosa
+                     window.location.href = "/chatbot/pharmacybot";
+                   } else {
+                     // La verificación del token falló
+                     console.log('Error al verificar el token');
+                   }
+                 })
+                 .catch(error => {
+                   console.log('Error de red:', error);
+                 });
+               }
+      
+               window.onload = function () {
+                 google.accounts.id.initialize({
+                   client_id: "695882531976-ekdruiina3tndc6u3prc3v5c52pb3v02.apps.googleusercontent.com",
+                   callback: handleCredentialResponse
+                 });
+      
+                 google.accounts.id.renderButton(
+                   document.getElementById("buttonDiv"),
+                   { theme: "outline", size: "large" }  // customization attributes
+                 );
+      
+                 google.accounts.id.prompt(); // también mostrar el diálogo One Tap
+               }
+      
+      </script>
+         <div id="buttonDiv"></div>
+      </script>
+      
+
+
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function validarCamposEdad(edad, campo) {
+        const minEdad = 10;
+        const maxEdad = 100;
+    
+        // Obtener el valor actual del campo de fecha de nacimiento
+        const fechaNacimiento = new Date(edad);
+        
+        // Calcular la fecha mínima y máxima permitida
+        const fechaMinima = new Date();
+        fechaMinima.setFullYear(fechaMinima.getFullYear() - maxEdad);
+        const fechaMaxima = new Date();
+        fechaMaxima.setFullYear(fechaMaxima.getFullYear() - minEdad);
+        
+        // Convertir las fechas a formato YYYY-MM-DD para comparar
+        const fechaNacimientoStr = fechaNacimiento.toISOString().split('T')[0];
+        const fechaMinimaStr = fechaMinima.toISOString().split('T')[0];
+        const fechaMaximaStr = fechaMaxima.toISOString().split('T')[0];
+        
+        // Obtener el mensaje de error y el campo contenedor
+        const mensajeError = document.getElementById(campo + 'Error');
+        const contenedorInput = document.querySelector('.contenedorInputEdad');
+    
+        // Si la edad está fuera del rango válido, mostrar el mensaje de error y resaltar el contenedor
+        if (fechaNacimientoStr < fechaMinimaStr || fechaNacimientoStr > fechaMaximaStr) {
+          mensajeError.innerHTML = 'La edad debe estar entre 10 y 100 años.';
+          contenedorInput.style.borderColor = 'red';
+        } else {
+          mensajeError.innerHTML = ''; // Limpiar el mensaje de error si la edad es válida
+          contenedorInput.style.borderColor = '#ccc'; // Restaurar el color del borde si la edad es válida
+        }
+      }
+    </script>
+    
+
+  </body>
+</html>

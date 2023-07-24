@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "newagent-lpsi",
+  "private_key_id": "00e02bf2e2ec0f78f1ae07e05a230819f5da0064",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC0zFfjXNYM5PEy\n7gzSbGiDqQBzyOFpoFoSazXmWqNO1Dr2bmn9RKinnkPYt34NIFAUWDrNxf+bsXrv\n69durzaFxDDP1CfHAK5P87zWvsErQJqxpF3kzxI7Hw/j4tJ9jneYKm0En0o7ULjV\niwriinoVMgqHMF87miRDt5CzBTlkiroBBndYurEjCgKCTjH8TZjvEpJWjWoa0J2n\nDrbtfHFWZStESnP2g+OnCO4/lFT9+Fbr3udBSktnfYI4EK7Aotw5TSGvcdErGoRw\nVOkTn5eJ1nuaruq81EUlCNkNla76Axi9GXMMeHzBpj1DEq/57NR2cDZ1BGLlfXun\niihHAjJTAgMBAAECggEAJkSAL8QVHFqTAOwo85r1jjSFv3wb1f8WQYLGwFCb81Hx\nfvqE3ZIcPoo9ow/HkuCtgnjgTXCktyAcPM8G5MsaN7r8d+jYWIM44fxdkniCq3R7\nqbD4HLeFjNT4yIvYcLHod2E3fPx4OlDOJojND4Eu8PCMEOw4pAVuupSOgI3RBYoJ\nY35+8uFvx7ow6Pyhndf3vOBGjE9V/Hb2bcF+yn3qEMk7TBdePprTyN6Ennxqqne3\n19pxlxm7TlBETpotrR73iA1u5YZ9l5dsYI0Tdo3H2vGgvdTJstQvQBpdRH+Lmg6X\nyJlmyy0Xzzui8mHoYAXwgLoX2MWnGQBIpq/oPIlV2QKBgQD4/tuKkuGLCRBItO0a\nI36iI8/YBsJ3Es7F/spMzpJyLY37NxAd7xqqT1Vwg0mfdfs+Ifu2aXDGEAD7psXz\ntY9z8PAAUq/1HOXWeXI2F7UoM9HlWDuoCIycofM0ueq/ZOOWu3eB/IV3HA9QFefw\nsPLO3tvgRajuQ4GRrSKq0v8kuwKBgQC54lzITHGFPAjwglcNOfkYdX/hUv8zEv0q\nf4wmDv4jsA4/OZv+iKabk1LxiDFBt+QaVmiYNZrbuFQIbeeOlq+gg9hiOTu3a6vf\nV2zRIMjZKaSW3DCguxeNtb3fLsUq/zCxRoy9HBhIfpOS1EDCZ76mutOxEdQ/JaK+\nzY6plJMbSQKBgQDrvlhb1f8G5TjuraYC5nJBzwg87wF1PXBaE4azu6z5v1m67IIs\n5THo553sHdE50bljNUediC0GySY1HMw0lsTQL+D7XU5NEuQk8O0Ke92/x3hF3Qj2\nacm/jrG2TQQN29aC4tEeV9iBUibJW0QzJUVuSaABsdJka7OkGjlFZOm+ewKBgADj\n/sHO6/RRd1F/rl8X2gOt/HDd7u8VtjTP66H7DGirXUYcRo0Ppoy0Rf92QZYpBWTC\n6TlheF55IZ3wuN1MB4djWlQOJiUY1Pf6+UB/QbcYpfs7DtiWTOSW7FP3a2ZrVpZi\n2iXFzq/6O0bG0ZCc4qL13jHI/hVXXtI/NeHGHnZRAoGBAJTpMSM7J+eA797L2ZTe\nJcARw+cGk2UqQCNUhI2T04rmnelqFjEWX7XNUsY9iLQ7R7sjwHdo/UA/AZDkgcDA\ng0UNpHMT/KrjenxXgDGUa+aYkhkXHsM9XU7elpXlCMxxxkC/PuK3AiUxlzzsLGoS\ni5D0dY3mximjSJQWkLddylKD\n-----END PRIVATE KEY-----\n",
+  "client_email": "phamacybotcliente1@newagent-lpsi.iam.gserviceaccount.com",
+  "client_id": "118176588054868065409",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/phamacybotcliente1%40newagent-lpsi.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
