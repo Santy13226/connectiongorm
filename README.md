@@ -1,3 +1,8 @@
-# connectiongorm
-Proyecto de conexión a distintas bases de datos utilizando ORM de GO llamado GORM
-Cuanta con operaciones CRUD que permiten manipulas varias bases de datos
+# CHATBOT
+Desarrolladores:
+-	JAIME SEBASTIÁN BURGOS MELENDRÉZ	6816
+-	BRYAN SANTIAGO GUAYLLA ASHQUI		6822
+-	SANTIAGO DAVID MELENA VALLEJO		6828
+-	HÉCTOR DANIEL NIETO RUIZ			6832
+
+La Documentación esta con el archivo de nombre: "Documentacion_6816_6822_6828_6832"
